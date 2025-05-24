@@ -1,2 +1,4 @@
 .vscode
 .idx
+Backend/server-go-products/.env
+.env
