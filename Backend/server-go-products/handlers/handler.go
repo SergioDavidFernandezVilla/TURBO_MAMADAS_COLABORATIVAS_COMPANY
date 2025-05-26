@@ -5,6 +5,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	mongo "github.com/SergioDavidFernandezVilla/TURBO_MAMADAS_COLABORATIVAS_COMPANY/Backend/utils/models"
@@ -16,7 +17,11 @@ import (
 
 func GetProductos(appCtx *mongo.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		coleccion := appCtx.MongoClient.Database("company").Collection("productos")
+
+		// Obtener env
+		var database = os.Getenv("DATABASE")
+		var collection = os.Getenv("COLLECTION")
+		coleccion := appCtx.MongoClient.Database(database).Collection(collection)
 
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
@@ -54,9 +59,9 @@ func GetProductos(appCtx *mongo.AppContext) gin.HandlerFunc {
 
 func CreateProductos(appCtx *mongo.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var nuevoProducto models.Producto
+		var inputJSON models.ProductoJSON
 
-		if err := c.ShouldBindJSON(&nuevoProducto); err != nil {
+		if err := c.ShouldBindJSON(&inputJSON); err != nil {
 			c.JSON(http.StatusBadRequest, models.ResponseMessage{
 				Status:  http.StatusBadRequest,
 				Message: "Error en el formato del JSON: " + err.Error(),
@@ -65,16 +70,47 @@ func CreateProductos(appCtx *mongo.AppContext) gin.HandlerFunc {
 			return
 		}
 
-		nuevoProducto.ID = primitive.NewObjectID()
-		now := time.Now()
-		nuevoProducto.FechaCreacion = now
-		nuevoProducto.FechaActualizacion = now
+		// Convertir ID si viene como string
+		var objectID primitive.ObjectID
+		var err error
 
-		coleccion := appCtx.MongoClient.Database("company").Collection("productos")
+		if inputJSON.ID != "" {
+			_, err := primitive.ObjectIDFromHex(inputJSON.ID)
+			if err != nil {
+				c.JSON(http.StatusBadRequest, models.ResponseMessage{
+					Status:  http.StatusBadRequest,
+					Message: "ID inválido: " + err.Error(),
+					Data:    nil,
+				})
+				return
+			}
+		} else {
+			objectID = primitive.NewObjectID()
+		}
+
+		now := time.Now()
+
+		nuevoProducto := models.Producto{
+			ID:                 objectID,
+			Nombre:             inputJSON.Nombre,
+			Precio:             inputJSON.Precio,
+			Stock:              inputJSON.Stock,
+			Categoria:          inputJSON.Categoria,
+			FechaCreacion:      now,
+			FechaActualizacion: now,
+		}
+
+	
+
+		// Obtener env
+		var database = os.Getenv("DATABASE")
+		var collection = os.Getenv("COLLECTION")
+		coleccion := appCtx.MongoClient.Database(database).Collection(collection)
+
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
-		_, err := coleccion.InsertOne(ctx, nuevoProducto)
+		_, err = coleccion.InsertOne(ctx, nuevoProducto)
 		if err != nil {
 			log.Printf("❌ Error al insertar producto: %v", err)
 			c.JSON(http.StatusInternalServerError, models.ResponseMessage{
