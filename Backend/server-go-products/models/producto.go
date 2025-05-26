@@ -6,14 +6,22 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+type ProductoJSON struct {
+	ID        string `json:"id"` // es string, porque así llega desde el cliente
+	Nombre    string `json:"nombre"`
+	Precio    float64 `json:"precio"`
+	Stock     int `json:"stock"`
+	Categoria string `json:"categoria"`
+}
+
 type Producto struct {
-	ID                 primitive.ObjectID `bson:"_id,omitempty" json:"id"`
-	Nombre             string             `bson:"nombre" json:"nombre"`
-	Precio             string             `bson:"precio" json:"precio"`
-	Stock              string             `bson:"stock" json:"stock"`
-	Categoria          string             `bson:"categoria" json:"categoria"`
-	FechaCreacion      time.Time          `bson:"fechaCreacion" json:"fecha_Creacion"`
-	FechaActualizacion time.Time          `bson:"fechaActualizacion" json:"fecha_Actualizacion"`
+	ID                 primitive.ObjectID `bson:"_id,omitempty"`
+	Nombre             string             `bson:"nombre"`
+	Precio             float64             `bson:"precio"`
+	Stock              int             `bson:"stock"`
+	Categoria          string             `bson:"categoria"`
+	FechaCreacion      time.Time          `bson:"fechaCreacion"`
+	FechaActualizacion time.Time          `bson:"fechaActualizacion"`
 }
 
 type ResponseMessage struct {
