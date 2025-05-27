@@ -9,8 +9,8 @@ import (
 func Router(router *gin.Engine, appCtx *models.AppContext) {
 	api := router.Group("/api/v1")
 	{
-		api.GET("/uploads/:filename")
-		api.GET("/products/:product_id/images", handlers.GetImagesByProductID(appCtx))
-		api.POST("/products/:product_id/alt", handlers.UploadToImageProduct(appCtx))
+		api.GET("/upload/:tipo/:id", handlers.GetImagesByProductID(appCtx))
+		api.POST("/upload/:tipo/:id", handlers.UploadToImageProduct(appCtx))
+		
 	}
 }

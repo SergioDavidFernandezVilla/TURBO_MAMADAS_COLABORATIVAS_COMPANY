@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  welcome:
+    build:
+      context: ./Backend/server-go-welcome
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  products:
+    build:
+      context: ./Backend/server-go-products
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+    depends_on:
+      - welcome
+
+  images:
+    build:
+      context: ./Backend/server-go-images
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - app-network
+    volumes:
+      - ./images_products/uploads:/app/uploads
+    depends_on:
+      - welcome
+
+  frontend:
+    build:
+      context: ./Frontend/vite-project
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+    depends_on:
+      - products
+      - images
+
+networks:
+  app-network:
+    driver: bridge
