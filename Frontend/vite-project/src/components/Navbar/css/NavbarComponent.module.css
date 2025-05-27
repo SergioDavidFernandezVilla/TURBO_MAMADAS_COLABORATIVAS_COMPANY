@@ -1,0 +1,36 @@
+.header__page__ {
+  height: 70px;
+}
+
+.navbar__header__page {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+}
+
+.ul__navbar__header__page {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 100%;
+}
+
+.li__ul__navbar__header__page {
+  list-style-type: none;
+}
+
+.a__li__navbar__header__page {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  text-decoration: none;
+}
+
+.icon__a__navbar__header__page {
+  height: 35px;
+  width: 35px;
+}
+
+.h1__a__navbar__header__page {
+  font-style: italic;
+}
