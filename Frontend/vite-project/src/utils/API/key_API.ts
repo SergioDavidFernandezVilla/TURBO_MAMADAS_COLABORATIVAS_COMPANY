@@ -1,24 +1,32 @@
 /**
- * Archivo de configuración para las URLs base de las APIs usadas en la aplicación.
- * Aquí se definen las constantes globales para interactuar con los distintos
- * endpoints de productos e imágenes.
+ * Configuración de URLs base para APIs de productos e imágenes.
+ * Cambia automáticamente entre entorno local y producción.
  */
 
-// Detecta entorno local
 const isLocalhost =
   typeof window !== "undefined" && window.location.hostname === "localhost";
 
-// URL base del backend de productos
+// ======== BASES ======== //
 const BASE_PRODUCTOS = isLocalhost
   ? "http://localhost:8081"
   : "https://8081-firebase-turbomamadascolaborativascompany-1748038475149.cluster-aj77uug3sjd4iut4ev6a4jbtf2.cloudworkstations.dev";
 
-// URL base del backend de imágenes
 const BASE_IMAGES = isLocalhost
   ? "http://localhost:8082"
   : "https://8082-firebase-turbomamadascolaborativascompany-1748038475149.cluster-aj77uug3sjd4iut4ev6a4jbtf2.cloudworkstations.dev";
 
-// Endpoints exportados
+// ======== API PRODUCTOS ======== //
 export const API_PRODUCTOS = `${BASE_PRODUCTOS}/api/productos`;
 
-export const API_IMAGES = `${BASE_IMAGES}/api/v1/upload/productos`;
+// ======== API IMÁGENES ======== //
+export const API_IMAGES_UPLOAD = `${BASE_IMAGES}/api/v1/upload/`;
+export const API_IMAGES_BY_PRODUCT = `${BASE_IMAGES}/api/v1/upload`;
+export const API_IMAGES_BASE = `${BASE_IMAGES}/api/v1/`;
+
+// ======== SOLO PARA PRODUCCIÓN (si necesitas apuntar fijo) ======== //
+export const BASE_API_ONLY_PRODUCTOS =
+  "https://8081-firebase-turbomamadascolaborativascompany-1748038475149.cluster-aj77uug3sjd4iut4ev6a4jbtf2.cloudworkstations.dev";
+export const BASE_API_ONLY_IMAGES_BYID_PRODUCT =
+  "https://8082-firebase-turbomamadascolaborativascompany-1748038475149.cluster-aj77uug3sjd4iut4ev6a4jbtf2.cloudworkstations.dev/api/v1/upload";
+export const API_ONLY_IMAGES_SHOW =
+  "https://8082-firebase-turbomamadascolaborativascompany-1748038475149.cluster-aj77uug3sjd4iut4ev6a4jbtf2.cloudworkstations.dev/api/v1/";

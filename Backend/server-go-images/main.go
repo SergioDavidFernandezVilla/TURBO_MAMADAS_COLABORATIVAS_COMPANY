@@ -34,7 +34,7 @@ func main() {
 
 	router := gin.Default()
 	routers.Router(router, appCtx)
-	router.Static("/uploads", "../../images_products/uploads")
+	
 
 	router.Run(":8082")
 }

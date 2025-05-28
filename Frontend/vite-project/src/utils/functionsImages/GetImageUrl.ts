@@ -1,5 +1,5 @@
 // KEY_API
-import { API_IMAGES_BASE_URL } from "../API/key_API";
+import { API_IMAGES_BASE } from "../API/key_API";
 
 /**
  * Construye la URL completa de una imagen desde el nombre o path.
@@ -7,5 +7,6 @@ import { API_IMAGES_BASE_URL } from "../API/key_API";
  * @returns URL completa de la imagen.
  */
 export const getImageUrl = (path: string): string => {
-  return `${API_IMAGES_BASE_URL}/${path}`;
+  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+  return `${API_IMAGES_BASE}${cleanPath}`;
 };
