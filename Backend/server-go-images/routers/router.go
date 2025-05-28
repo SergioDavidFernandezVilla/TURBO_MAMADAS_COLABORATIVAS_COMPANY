@@ -11,6 +11,6 @@ func Router(router *gin.Engine, appCtx *models.AppContext) {
 	{
 		api.GET("/upload/:tipo/:id", handlers.GetImagesByProductID(appCtx))
 		api.POST("/upload/:tipo/:id", handlers.UploadToImageProduct(appCtx))
-		
+		api.Static("/uploads", "../../images_products/uploads")
 	}
 }
