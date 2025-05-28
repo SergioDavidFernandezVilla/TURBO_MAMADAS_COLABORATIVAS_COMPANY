@@ -48,16 +48,15 @@ images_products/
 ```bash
 git clone https://github.com/SergioDavidFernandezVilla/TURBO_MAMADAS_COLABORATIVAS_COMPANY.git
 cd TURBO_MAMADAS_COLABORATIVAS_COMPANY
+```
 
 
-2. Levantar con Docker
-bash
-Copiar
-Editar
+### 2. Levantar con Docker
+```
 docker-compose up --build
+```
 
-
-Esto levanta los siguientes servicios:
+#### Esto levanta los siguientes servicios:
 
 Servicio	URL de acceso
 Welcome	http://localhost:8080
