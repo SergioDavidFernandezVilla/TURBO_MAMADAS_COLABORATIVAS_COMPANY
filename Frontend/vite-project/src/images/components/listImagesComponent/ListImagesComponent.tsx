@@ -2,9 +2,7 @@
 import { useFetch } from "../../../hooks/useHookFetchData";
 
 // KEY_API
-import {
-  BASE_API_ONLY_IMAGES_BYID_PRODUCT,
-} from "../../../utils/API/key_API";
+import { API_IMAGES_BY_PRODUCT } from "../../../utils/API/key_API";
 
 // TYPES
 import type { Imagen } from "../../types/imageComponent/ImagenComponentType";
@@ -22,15 +20,16 @@ export const ListImagesComponent = ({ productId, tipo }: Props) => {
     data: imagenes,
     loading,
     error,
-  } = useFetch<Imagen[]>(
-    `${BASE_API_ONLY_IMAGES_BYID_PRODUCT}/${tipo}/${productId}`
-  );
+  } = useFetch<Imagen[]>(`${API_IMAGES_BY_PRODUCT}/${tipo}/${productId}`);
 
   if (loading) return <p>Cargando imágenes...</p>;
   if (error) return <p>Error cargando imágenes: {error}</p>;
   if (!imagenes || imagenes.length === 0) return <p>Sin imágenes</p>;
 
-  console.log("imagenes", imagenes.map((img) => img.url))
+  console.log(
+    "imagenes",
+    imagenes.map((img) => img.url)
+  );
 
   return (
     <>
